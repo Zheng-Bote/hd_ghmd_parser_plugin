@@ -58,7 +58,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ZHENG Robert Zhèng Bó Tè 郑 伯特
 
-Project Link: [https://github.com/Zheng-Bote/https://github.com/Zheng-Bote/header_docu_qt/](https://github.com/Zheng-Bote/header_docu_qt/)
+Project Link: [https://github.com/Zheng-Bote/header_docu_qt/](https://github.com/Zheng-Bote/header_docu_qt/)
 
 ### the end
 
