@@ -3,8 +3,8 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief Github Markdonw parser plugin for header_docu
  * @details parse Github Markdown header
- * @version 0.2.0
- * @date 2023-04-16
+ * @version 0.3.0
+ * @date 2023-04-21
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
@@ -52,47 +52,40 @@ QString Hd_ghmd_parser_plugin::parseLine(QString text)
 
     QRegularExpressionMatch matchSearchStr = searchTitle.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "\n- - -\n## " + text;
         return text;
     }
 
     matchSearchStr = searchBrief.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "### " + text;
         return text;
     }
 
     matchSearchStr = searchDesc.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "### " + text;
         return text;
     }
 
     matchSearchStr = searchSource.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "### " + text;
         return text;
     }
 
     matchSearchStr = searchSyntax.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "### " + text;
         return text;
     }
 
     matchSearchStr = searchReturn.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "### " + text;
         return text;
     }
 
     matchSearchStr = searchHistory.match(text);
     if(matchSearchStr.hasMatch()) {
-        text = "### " + text;
         return text;
     }
 
-    return("> " + text);
+    return(text);
 }
 
 void Hd_ghmd_parser_plugin::parseFile(QMap<QString, QString> &mapParseKeys, QString pathToFile)
@@ -117,6 +110,8 @@ void Hd_ghmd_parser_plugin::parseFile(QMap<QString, QString> &mapParseKeys, QStr
     QString line;
     bool isComment = false;
 
+    QString matchedKey;
+
     while (in.readLineInto(&line)) {
         //out << line << "\n";
         QRegularExpressionMatch matchStart = reBegin.match(line);
@@ -135,9 +130,23 @@ void Hd_ghmd_parser_plugin::parseFile(QMap<QString, QString> &mapParseKeys, QStr
             }
             else {
                 //                out << line << "\n";
-                outText.append(Hd_ghmd_parser_plugin::parseLine(line));
+                //outText.append(Hd_ghmd_parser_plugin::parseLine(line));
+                for (auto [key, val] : mapParseKeys.asKeyValueRange()) {
+                    QRegularExpression searchKey(key);
+                    QRegularExpressionMatch matchSearchStr = searchKey.match(line);
+                    if(matchSearchStr.hasMatch()) {
+                        //qInfo() << "matched: " << matchSearchStr.captured(0) << " " << matchSearchStr.captured(1);
+                        matchedKey = key;
+
+                    }
+                }
+                line.replace(matchedKey, "");
+                line.replace(":", "");
+                QString newLine = line.trimmed();
+                if(newLine.length() != 0) {
+                    mapParseKeys[matchedKey].append(newLine + "\n");
+                }
             }
-            outText.append("\n");
         }
         else {
             break;
@@ -145,9 +154,10 @@ void Hd_ghmd_parser_plugin::parseFile(QMap<QString, QString> &mapParseKeys, QStr
     }
 
     file.close();
+}
 
-    // outText
-    qInfo() << "##### outText #####\n";
-    qInfo() << outText;
+void Hd_ghmd_parser_plugin::writeFile(QMap<QString, QString> mapParseKeys, QMap<QString, QString> mapFileAttribs, QString pathToFile)
+{
+
 }
 
