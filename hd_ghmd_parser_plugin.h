@@ -14,7 +14,7 @@
 
 const QString PLUGIN_SHORTNAME = "gh_markdown";
 const QString PLUGIN_NAME ="Github Markdown parser";
-const QString PLUGIN_VERSION = "0.3.0";
+const QString PLUGIN_VERSION = "1.0.0";
 
 class Hd_ghmd_parser_plugin: public QObject, public Plugin
 {
