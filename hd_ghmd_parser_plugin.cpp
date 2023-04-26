@@ -3,8 +3,8 @@
  * @author ZHENG Robert (www.robert.hase-zheng.net)
  * @brief Github Markdonw parser plugin for header_docu
  * @details parse Github Markdown header
- * @version 1.0.0
- * @date 2023-04-21
+ * @version 1.1.0
+ * @date 2023-04-25
  *
  * @copyright Copyright (c) ZHENG Robert 2023
  *
@@ -15,17 +15,17 @@
 Hd_ghmd_parser_plugin::Hd_ghmd_parser_plugin(QObject *parent)
 {
     Q_UNUSED(parent);
-    qDebug() << "Plugin Constructor";
+    //qDebug() << "Plugin Constructor";
 }
 
 Hd_ghmd_parser_plugin::~Hd_ghmd_parser_plugin()
 {
-    qDebug() << "Plugin Deconstructed";
+    //qDebug() << "Plugin Deconstructed";
 }
 
 void Hd_ghmd_parser_plugin::test(QString name)
 {
-    qInfo() << "Test from Plugin: " << name;
+    qInfo() << "Test from " << PLUGIN_SHORTNAME << " Plugin: " << name;
 }
 
 QString Hd_ghmd_parser_plugin::getName()
@@ -90,7 +90,7 @@ QString Hd_ghmd_parser_plugin::parseLine(QString text)
 
 void Hd_ghmd_parser_plugin::parseFile(QMap<QString, QString> &mapParseKeys, QString pathToFile)
 {
-    qDebug() << "GH_markdown ParserPlugin::parseFile: " << pathToFile;
+    //qDebug() << "GH_markdown ParserPlugin::parseFile: " << pathToFile;
 
     QFile file(pathToFile);
     QString searchBegin = QRegularExpression::escape("/*");
